@@ -1,4 +1,4 @@
-#!/home/canoodle/Desktop/youtube_mp3_downloader/venv/bin/python
+#!/usr/bin/python3
 import requests
 from bs4 import BeautifulSoup
 from prettytable import PrettyTable
