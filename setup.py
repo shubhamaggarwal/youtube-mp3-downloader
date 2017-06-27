@@ -2,7 +2,7 @@
 from setuptools import setup
 
 setup(
-    name='youtube_mp3_downloader',
+    name='youtube-mp3-downloader',
     version='1.1',
     description='Download mp3 from youtube',
     long_description='This python package lets you mp3 from download youtube videos to your local machine.',
