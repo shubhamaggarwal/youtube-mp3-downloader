@@ -4,8 +4,10 @@ from prettytable import PrettyTable
 import urllib.request
 from fake_useragent import UserAgent
 import sys
-import os
+import subprocess
 import time
+import getpass
+
 
 class color:
     PURPLE = '\033[95m'
@@ -25,24 +27,30 @@ def input_query():
         search_query = sys.argv[1:]
         if len(sys.argv) <= 1:
             raise IndexError
-        name = ' '.join(search_query)
-        return name
+        return ' '.join(search_query)
     except IndexError:
-        print("Enter at least one search query.")
+        print(color.BOLD + color.YELLOW + "Enter at least one search query." + color.END)
         sys.exit()
 
 
 def scrape():
     search_query = input_query()
-    youtube_url = "https://www.youtube.com/results?search_query="+search_query
-    ua = UserAgent()
-    header = {'User-Agent': ua.random}
+    youtube_url = "https://www.youtube.com/results?search_query=" + search_query
+    header = {'User-Agent': UserAgent().random}
     try:
         response = requests.get(youtube_url, headers=header)
         if response.status_code == 200:
-            print(color.BOLD + color.BLUE + "\nBreathe in..Breathe out.. : " + color.END)
+            print(color.BOLD + color.BLUE + "\nWe have got your stuff. " +
+                  "Meanwhile you can practice breathing in and out: " +
+                  color.END
+                  )
+            time.sleep(2)
     except requests.exceptions.ConnectionError:
-        print("Connection Error. Check your internet connection or try again after sometime.")
+        print(color.UNDERLINE + color.BOLD + color.RED + "\nConnection Error." +
+              " Check your internet connection" +
+              " or try again after sometime." +
+              color.END
+              )
         sys.exit()
 
     content = response.content
@@ -56,7 +64,7 @@ def scrape():
     sequence = ["S.No", "Title"]
     t = PrettyTable(sequence)
     sz = len(title)
-    print("Results found = "+str(sz))
+    print("Results found = " + str(sz))
     sys.setrecursionlimit(100000)
     for i in range(sz):
         t.add_row([i + 1, title[i]])
@@ -83,34 +91,40 @@ def reporthook(blocknum, blocksize, totalsize):
         s = "\r%5.1f%% %*d / %d" % (
             percent, len(str(totalsize)), readsofar, totalsize)
         sys.stderr.write(s)
-        if readsofar >= totalsize: # near the end
+        if readsofar >= totalsize:  # near the end
             sys.stderr.write("\n")
-    else: # total size is unknown
+    else:  # total size is unknown
         sys.stderr.write("read %d\n" % (readsofar,))
 
 
 def mp3downloader():
     filename, video_url = scrape()
-    print(video_url)
-    redirect_url = "http://youtubeinmp3.com/download/?video="+video_url
-    print(redirect_url)
+    redirect_url = "http://youtubeinmp3.com/download/?video=" + video_url
     ua = UserAgent()
     header = {'User-Agent': ua.random}
     try:
         response = requests.get(redirect_url, headers=header)
     except requests.exceptions.ConnectionError as e:
-        print("Connection Error. Check your internet connection or try again after sometime.")
+        print(color.UNDERLINE + color.BOLD + color.RED + "\nConnection Error." +
+              " Check your internet connection" +
+              " or try again after sometime." +
+              color.END
+              )
         sys.exit()
     content = response.content
     soup = BeautifulSoup(content, "html.parser")
     tag = soup.find_all('a', attrs={'id': "download"})
-    print(tag)
-    download_url = "http://www.youtubeinmp3.com/"+tag[0]['href']
-    print(download_url)
-    print("Downloading..")
-    urllib.request.urlretrieve(download_url, "/home/canoodle/Desktop/"+filename, reporthook)
-    print("Done")
-
+    download_url = "http://www.youtubeinmp3.com/" + tag[0]['href']
+    print(color.BOLD + color.DARKCYAN + "Filling diesel in the engine" + color.END)
+    time.sleep(2)
+    path = "/home/"+getpass.getuser()+"/Desktop/"+filename
+    try:
+        urllib.request.urlretrieve(download_url, path + filename, reporthook)
+        print(color.BOLD + color.GREEN + "Done" + color.END)
+    except:
+        print(color.BOLD + color.RED + "\nSorry, we tried but someone mixed water with diesel."+
+                                       " You can try again." +
+              color.END)
 
 if __name__ == "__main__":
     mp3downloader()
