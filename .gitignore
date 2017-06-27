@@ -1,10 +1,13 @@
 .pyc
 pyenv*/*
 *.egg-info/
-dist/*
 setup.cfg
 .idea/
 build/*
 !build/build.xml
-venv/
+/venv/
 */__pycache__/
+*.pyc
+/dist/
+/*.egg-info
+/*.egg
