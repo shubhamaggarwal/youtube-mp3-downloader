@@ -6,3 +6,5 @@ setup.cfg
 .idea/
 build/*
 !build/build.xml
+venv/
+*/__pycache__/
