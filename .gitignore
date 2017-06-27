@@ -1,0 +1,8 @@
+.pyc
+pyenv*/*
+*.egg-info/
+dist/*
+setup.cfg
+.idea/
+build/*
+!build/build.xml
