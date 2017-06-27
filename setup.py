@@ -21,9 +21,11 @@ setup(
     author_email='aggarwals5411@gmail.com',
     url='https://github.com/shubhamaggarwal/youtube-mp3-downloader',
     packages=['youtube_mp3_downloader'],
+    scripts=['bin/youtube_mp3_downloader'],
     install_requires=[
         "requests >= 2.18.1",
         "beautifulsoup4 >= 4.6.0",
-        "PrettyTable"
+        "PrettyTable",
+        "fake_useragent"
     ]
 )
