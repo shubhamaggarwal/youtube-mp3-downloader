@@ -4,12 +4,11 @@ from prettytable import PrettyTable
 import urllib.request
 from fake_useragent import UserAgent
 import sys
-import subprocess
 import time
 import getpass
 
 
-class color:
+class color(object):
     PURPLE = '\033[95m'
     CYAN = '\033[96m'
     DARKCYAN = '\033[36m'
@@ -88,8 +87,7 @@ def reporthook(blocknum, blocksize, totalsize):
     readsofar = blocknum * blocksize
     if totalsize > 0:
         percent = readsofar * 1e2 / totalsize
-        s = "\r%5.1f%% %*d / %d" % (
-            percent, len(str(totalsize)), readsofar, totalsize)
+        s = "\r%5.1f%% %*d / %d" % (percent, len(str(totalsize)), readsofar, totalsize)
         sys.stderr.write(s)
         if readsofar >= totalsize:  # near the end
             sys.stderr.write("\n")
@@ -114,17 +112,17 @@ def mp3downloader():
     content = response.content
     soup = BeautifulSoup(content, "html.parser")
     tag = soup.find_all('a', attrs={'id': "download"})
-    download_url = "http://www.youtubeinmp3.com/" + tag[0]['href']
+    download_url = "http://www.youtubeinmp3.com" + tag[0]['href']
     print(color.BOLD + color.DARKCYAN + "Filling diesel in the engine" + color.END)
     time.sleep(2)
-    path = "/home/"+getpass.getuser()+"/Desktop/"+filename
+    path = "/home/"+getpass.getuser()+"/Desktop/"+filename+".mp3"
     try:
-        urllib.request.urlretrieve(download_url, path + filename, reporthook)
+        urllib.request.urlretrieve(download_url, path, reporthook)
         print(color.BOLD + color.GREEN + "Done" + color.END)
     except:
-        print(color.BOLD + color.RED + "\nSorry, we tried but someone mixed water with diesel."+
-                                       " You can try again." +
-              color.END)
+        print(color.BOLD + color.RED + "\nSorry, we tried but someone added water with diesel."+
+                                       " You can try again." + color.END)
+
 
 if __name__ == "__main__":
     mp3downloader()
