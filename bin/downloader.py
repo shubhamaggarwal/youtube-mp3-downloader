@@ -5,7 +5,7 @@ import urllib.request
 from fake_useragent import UserAgent
 import sys
 import os
-
+import time
 
 class color:
     PURPLE = '\033[95m'
@@ -23,7 +23,7 @@ class color:
 def input_query():
     try:
         search_query = sys.argv[1:]
-        if len(sys.argv) >= 1:
+        if len(sys.argv) <= 1:
             raise IndexError
         name = ' '.join(search_query)
         return name
@@ -41,7 +41,7 @@ def scrape():
         response = requests.get(youtube_url, headers=header)
         if response.status_code == 200:
             print(color.BOLD + color.BLUE + "\nBreathe in..Breathe out.. : " + color.END)
-    except requests.exceptions.ConnectionError as e:
+    except requests.exceptions.ConnectionError:
         print("Connection Error. Check your internet connection or try again after sometime.")
         sys.exit()
 
@@ -76,6 +76,19 @@ def scrape():
         print(color.BOLD + color.CYAN + "Sorry, no results found." + color.END)
 
 
+def reporthook(blocknum, blocksize, totalsize):
+    readsofar = blocknum * blocksize
+    if totalsize > 0:
+        percent = readsofar * 1e2 / totalsize
+        s = "\r%5.1f%% %*d / %d" % (
+            percent, len(str(totalsize)), readsofar, totalsize)
+        sys.stderr.write(s)
+        if readsofar >= totalsize: # near the end
+            sys.stderr.write("\n")
+    else: # total size is unknown
+        sys.stderr.write("read %d\n" % (readsofar,))
+
+
 def mp3downloader():
     filename, video_url = scrape()
     print(video_url)
@@ -95,7 +108,7 @@ def mp3downloader():
     download_url = "http://www.youtubeinmp3.com/"+tag[0]['href']
     print(download_url)
     print("Downloading..")
-    urllib.request.urlretrieve(download_url, "/home/canoodle/Desktop/"+filename)
+    urllib.request.urlretrieve(download_url, "/home/canoodle/Desktop/"+filename, reporthook)
     print("Done")
 
 
