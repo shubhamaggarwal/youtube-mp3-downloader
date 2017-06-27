@@ -85,13 +85,10 @@ def scrape():
 
 
 def reporthook(blocknum, blocksize, totalsize):
-    blocknum /= 1024 ** 2
-    blocksize /= 1024**2
-    totalsize /= 1024**2
     readsofar = blocknum * blocksize
     if totalsize > 0:
         percent = readsofar * 1e2 / totalsize
-        s = "\r%5.1f%% %*dM / %dM" % (percent, len(str(totalsize)), readsofar, totalsize)
+        s = "\r%5.1f%% %*db / %db" % (percent, len(str(totalsize)), readsofar, totalsize)
         sys.stderr.write(s)
         if readsofar >= totalsize:  # near the end
             sys.stderr.write("\n")
@@ -122,7 +119,7 @@ def mp3downloader():
     path = "/home/"+getpass.getuser()+"/Desktop/"+filename+".mp3"
     try:
         urllib.request.urlretrieve(download_url, path, reporthook)
-        print(color.BOLD + color.GREEN + "Done" + color.END)
+        print(color.BOLD + color.GREEN + "\nDone" + color.END)
     except:
         print(color.BOLD + color.RED + "\nSorry, we tried but someone added water with diesel."+
                                        " You can try again." + color.END)
