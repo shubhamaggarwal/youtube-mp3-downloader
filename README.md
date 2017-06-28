@@ -31,4 +31,4 @@ Once the download finishes, the file will be downloaded to /home/[username]/Desk
 ![alt text](https://github.com/shubhamaggarwal/youtube-mp3-downloader/blob/master/screenshots/download.jpg "Downloading file")
 
 # DISCLAIMER
-## ALL THE CONTENT BELONGS TO YOUTUBE. IT MIGHT BE ILLEGAL TO USE THIS PACKAGE IN SOME COUNTRIES.
+## ALL THE CONTENT BELONGS TO YOUTUBE.COM. IT MIGHT BE ILLEGAL TO USE THIS PACKAGE IN SOME COUNTRIES. All DOWNLOADS ARE REDIRECTED THROUGH YOUTUBEINMP3.COM
