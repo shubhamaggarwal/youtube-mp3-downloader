@@ -115,7 +115,7 @@ def mp3downloader():
         if total_length is None:
             raise Exception
         downloaded_length = 0
-        print(path)
+        print(color.BOLD + color.GREEN + "Your file will be saved to "+str(path)+color.END)
         with open(path, 'wb') as fd:
             for chunk in res.iter_content(chunk_size=100000):
                 downloaded_length += len(chunk)
