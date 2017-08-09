@@ -105,7 +105,7 @@ def mp3downloader():
     print(color.BOLD + color.DARKCYAN + "Filling diesel in the engine" + color.END)
     file = filename+'.mp3'
     path = os.path.join(os.path.expanduser('~/Desktop'), file)
-    #try:
+    try:
 
         res = requests.get(download_url, timeout=10, stream=True)
                 

@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='youtube-mp3-downloader',
-    version='1.2',
+    version='1.4',
     description='Download mp3 from youtube',
     long_description='This python package lets you donwload mp3 from youtube videos to your local machine.',
     author='Shubham Aggarwal',
@@ -27,9 +27,6 @@ setup(
     install_requires=[
         "requests >= 2.18.1",
         "beautifulsoup4 >= 4.6.0",
-        "PrettyTable",
-        "os",
-        "time",
-        "sys"
+        "PrettyTable"
     ]
 )
