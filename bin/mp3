@@ -83,17 +83,6 @@ def scrape():
         print(color.BOLD + color.CYAN + "Sorry, no results found." + color.END)
 
 
-def reporthook(blocknum, blocksize, totalsize):
-    readsofar = blocknum * blocksize
-    if totalsize > 0:
-        percent = readsofar * 1e2 / totalsize
-        s = "\r%5.1f%% %*db / %db" % (percent, len(str(totalsize)), readsofar, totalsize)
-        sys.stderr.write(s)
-        if readsofar >= totalsize:  # near the end
-            sys.stderr.write("\n")
-    else:  # total size is unknown
-        sys.stderr.write("read %d\n" % (readsofar,))
-
 
 def mp3downloader():
     filename, video_url = scrape()
