@@ -1,4 +1,6 @@
 PrettyTable
 requests == 2.18.1
 beautifulsoup4 == 4.6.0
-fake_useragent
+os
+sys
+time
